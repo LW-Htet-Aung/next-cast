@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +16,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        elements: {
+          formButtonPrimary:
+            "bg-primary hover:bg-primary/90 border-none py-2 shadow-none ring-0 outline-none text-sm normal-case",
+        }
+      }}
+
+    >
+      <html lang="en">
+        <body className={`${inter.className} min-h-screen`}>{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
