@@ -1,5 +1,6 @@
 import { getCourse } from "@/actions/courses"
-import IconBadge from "@/components/ui/icon-badge"
+import { TitleForm } from "@/components/global/courses/TitleForm"
+import { IconBadge } from "@/components/ui/icon-badge"
 import { LayoutDashboard } from "lucide-react"
 
 type CourseDetailProps = {
@@ -34,6 +35,10 @@ const CourseDetail = async ({ params: { courseId } }: CourseDetailProps) => {
                         <IconBadge variant='default' icon={LayoutDashboard} />
                         <h2 className="text-xl">Customize your Course</h2>
                     </div>
+                    <TitleForm
+                        initialData={course}
+                        courseId={courseId}
+                    />
                 </div>
             </div>
         </section>
