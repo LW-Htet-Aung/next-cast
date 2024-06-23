@@ -1,4 +1,6 @@
 import { getCourse } from "@/actions/courses"
+import { DescriptionForm } from "@/components/global/courses/DescriptionForm"
+import { ImageForm } from "@/components/global/courses/ImageForm"
 import { TitleForm } from "@/components/global/courses/TitleForm"
 import { IconBadge } from "@/components/ui/icon-badge"
 import { LayoutDashboard } from "lucide-react"
@@ -36,6 +38,14 @@ const CourseDetail = async ({ params: { courseId } }: CourseDetailProps) => {
                         <h2 className="text-xl">Customize your Course</h2>
                     </div>
                     <TitleForm
+                        initialData={course}
+                        courseId={courseId}
+                    />
+                    <DescriptionForm
+                        initialData={course}
+                        courseId={courseId}
+                    />
+                    <ImageForm
                         initialData={course}
                         courseId={courseId}
                     />
