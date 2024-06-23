@@ -37,7 +37,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
         console.log(value)
         try {
-            await axios.patch(`api/courses/${courseId}`, value);
+            const course = await axios.patch(`/api/courses/${courseId}`, value);
             toast.success('Course Updated')
             toggleEdit()
             router.refresh()
