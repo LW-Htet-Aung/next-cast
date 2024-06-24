@@ -1,12 +1,12 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { FileUploader } from '@/components/ui/file-uploader'
+import { useToggle } from '@/hooks/useToggle'
 import { Course } from '@prisma/client'
 import axios from 'axios'
 import { ImageIcon, Pencil, PlusCircle } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import toast from 'react-hot-toast'
 import * as z from 'zod'
 
@@ -22,9 +22,8 @@ const formSchema = z.object({
 })
 
 export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
-    const [isEditing, setIsEditng] = useState(false)
+    const [isEditing, toggleEdit] = useToggle()
     const router = useRouter()
-    const toggleEdit = () => setIsEditng(!isEditing)
 
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
         console.log(value)

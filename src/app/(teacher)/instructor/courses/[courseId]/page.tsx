@@ -1,4 +1,5 @@
-import { getCourse } from "@/actions/courses"
+import { getCategories, getCourse } from "@/actions/courses"
+import { CategoryForm } from "@/components/global/courses/CategoryForm"
 import { DescriptionForm } from "@/components/global/courses/DescriptionForm"
 import { ImageForm } from "@/components/global/courses/ImageForm"
 import { TitleForm } from "@/components/global/courses/TitleForm"
@@ -12,6 +13,10 @@ type CourseDetailProps = {
 }
 const CourseDetail = async ({ params: { courseId } }: CourseDetailProps) => {
     const course = await getCourse(courseId)
+    const categories = await getCategories()
+    const categoryOptions = categories?.map((category) => ({ 
+        label: category.name, value: category.id }
+    ))
     const requiredField = [
         course.title,
         course.description,
@@ -48,6 +53,11 @@ const CourseDetail = async ({ params: { courseId } }: CourseDetailProps) => {
                     <ImageForm
                         initialData={course}
                         courseId={courseId}
+                    />
+                    <CategoryForm
+                        initialData={course}
+                        courseId={courseId}
+                        options={categoryOptions}
                     />
                 </div>
             </div>
