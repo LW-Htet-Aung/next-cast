@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useToggle } from '@/hooks/useToggle'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { Pencil } from 'lucide-react'
@@ -10,6 +11,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import * as z from 'zod'
+import { FormHeaderAction } from '../FormHeaderAction'
 
 interface TitleFormProps {
     initialData: {
@@ -25,14 +27,13 @@ const formSchema = z.object({
 })
 
 export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
-    const [isEditing, setIsEditng] = useState(false)
+    const [isEditing, toggleEdit] = useToggle()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData
     })
     const { isSubmitting, isValid } = form.formState
     const router = useRouter()
-    const toggleEdit = () => setIsEditng(!isEditing)
 
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
         console.log(value)
@@ -47,20 +48,11 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     }
     return (
         <div className='mt-6 border bg-slate-100 rounded-md p-4'>
-            <div className='font-medium flex items-center justify-between'>
-                Course Title
-                <Button onClick={toggleEdit} variant='ghost'>
-                    {!isEditing ? (
-                        <>
-                            <Pencil className='w-4 h-4 mr-2' />
-                            Edit Title
-                        </>
-                    ) :
-                        <>Cancle</>
-                    }
-
-                </Button>
-            </div>
+            <FormHeaderAction
+                title='title'
+                isEditing={isEditing}
+                handleEdit={toggleEdit}
+            />
             {!isEditing && (<p className='text-sm mt-2'>
                 {initialData.title}
             </p>)}
